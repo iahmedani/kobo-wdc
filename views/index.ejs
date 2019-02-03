@@ -1,0 +1,101 @@
+<meta name="csrf-token" content="<%= csrfToken %>" />
+<script src="js/promise.js"></script>
+<script
+  src="https://connectors.tableau.com/libs/tableauwdc-2.3.latest.js"
+  type="text/javascript"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+<script src="js/app.js"></script>
+<div class="container">
+  <div class="row vertical-center-row mt-5">
+    <form class="col-md-10 col-sm-12 " id="koboForm">
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input
+            class="form-check-input type"
+            type="radio"
+            name="type"
+            checked="checked"
+            value="kobo"
+          />
+          KoboToolbox
+          <input
+            class="form-check-input type"
+            type="radio"
+            name="type"
+            value="other"
+          />
+          Other API
+        </label>
+      </div>
+      <div class="form-group ">
+        <label for="url" id="label_url">Kobo Form Url:</label>
+        <input
+          type="ulr"
+          class="form-control"
+          id="url"
+          name="url"
+          placeholder="Enter kobo form url"
+          required
+        />
+      </div>
+      <div class="form-group  auth">
+        <label for="auth">Token Key</label>
+        <input
+          type="text"
+          class="form-control"
+          id="auth"
+          name="auth"
+          placeholder="Token Key"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitButton">
+        Get Data
+      </button>
+    </form>
+  </div>
+  <div class="row vertical-center-row mt-5">
+    <div class="col-md-10 col-sm-12">
+      <div class="card ">
+        <h5 class="card-header">
+          Note:
+        </h5>
+        <div class="card-body">
+          <h5 class="card-title">KoboToolBox</h5>
+          <ul class="card-text">
+            <li><span class="font-weight-bold"> Kobo Form URL: </span><span>This can be obtained by [kobo_url]/api/v1/forms</span></li>
+            <li><span class="font-weight-bold"> Auth Token: </span><span>This can be obtained by [kobo_url]/[user_name]/api-token</span></li>
+          </ul>
+          <h5 class="card-title">Other REST API</h5>
+          <ul class="card-text">
+            <li><span class="font-weight-bold"> API URL: </span><span>Works with all open API which do not require authentication</span></li>
+          </ul>
+        </div>
+              <div class="card-footer text-muted">
+                    
+                   <span> If you have any suggestion or issues please feel free contact me  @ <a href="https://github.com/iahmedani/kobo-wdc" class="text-muted"><i class="fab fa-github fx-2"></i>iahmedani/kobo-wdc</a> </span>
+                  </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function() {
+    $(".type").on("change", function(e) {
+      var val = $(this).val();
+      console.log(val);
+      if (val == "kobo") {
+        $("#label_url").text("Kobo form Url:");
+        $("#auth").attr("required", true);
+        $("#auth").val("");
+
+        $(".auth").css("display", "");
+      } else {
+        $("#label_url").text("API Url:");
+        $("#auth").attr("required", false);
+        $("#auth").val("api");
+        $(".auth").css("display", "none");
+      }
+    });
+  });
+</script>
