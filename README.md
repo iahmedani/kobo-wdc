@@ -16,5 +16,3 @@ git clone https://github.com/iahmedani/kobo-wdc
 ```
 npm install
 ```
-
-## This is liecenced under GNU v3
