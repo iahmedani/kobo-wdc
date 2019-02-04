@@ -16,5 +16,17 @@ git clone https://github.com/iahmedani/kobo-wdc
 ```
 npm install
 ```
+
+### Start
+```
+npm start
+```
+
+### Access
+
+```
+http://localhost:300
+```
+
 ## Testing server
 [Live Kobo WDC](http://167.179.85.104:3000)
