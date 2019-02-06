@@ -30,3 +30,6 @@ http://localhost:300
 
 ## Testing server
 [Live Kobo WDC](http://167.179.85.104:3000)
+
+## Heroku App
+[KOBO WDC](https://kwdc.herokuapp.com/)
