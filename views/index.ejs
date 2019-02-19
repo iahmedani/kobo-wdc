@@ -9,38 +9,32 @@
 <div class="container">
   <div class="row vertical-center-row mt-5">
     <form class="col-md-10 col-sm-12 " id="koboForm">
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">
-          <input
-            class="form-check-input type"
-            type="radio"
-            name="type"
-            checked="checked"
-            value="kobo"
-          />
-          KoboToolbox
-          <input
-            class="form-check-input type"
-            type="radio"
-            name="type"
-            value="other"
-          />
-          Other API
-        </label>
+      <div class="form-group" id="_error" >
+        
+
       </div>
       <div class="form-group ">
-        <label for="url" id="label_url">Kobo Form Url:</label>
+        <label for="type" id="label_url">Kobo Form Url:</label>
+        <select name="type" id="_type" class="form-control"  required>
+          <option value="https://kc.humanitarianresponse.info/api/v1">KoBoToolbox: Humanitarian</option>
+          <option value="https://kf.kobotoolbox.org/">KoBoToolbox</option>
+          <option value="https://api.ona.io/api/v1/">ONA.IO</option>
+          <option value="other_kobo">Custom KoboToolbox Installation</option>
+          <option value="other">Other REST API</option>
+        </select>
+      </div>
+      <div class="form-group  other_typ" style="display:none;">
+        <label for="custom_url">API URL:</label>
         <input
-          type="ulr"
+          type="url"
           class="form-control"
-          id="url"
-          name="url"
-          placeholder="Enter kobo form url"
-          required
+          id="custom_url"
+          name="custom_url"
+          
         />
       </div>
       <div class="form-group  auth">
-        <label for="auth">Token Key</label>
+        <label for="auth">Token Key:</label>
         <input
           type="text"
           class="form-control"
@@ -50,7 +44,16 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary" id="submitButton">
+      <div class="form-group formList" >
+          <label for="url" id="label_url">Form List:</label>
+        <select name="url" id="url" class="form-control" required>
+          <option selected> Choose</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" id="btnFormList">
+        Get Form List
+      </button>
+      <button type="submit" class="btn btn-primary" id="submitButton" disabled>
         Get Data
       </button>
     </form>
@@ -80,22 +83,107 @@
   </div>
 </div>
 <script>
-  $(function() {
-    $(".type").on("change", function(e) {
-      var val = $(this).val();
-      console.log(val);
-      if (val == "kobo") {
-        $("#label_url").text("Kobo form Url:");
-        $("#auth").attr("required", true);
-        $("#auth").val("");
+  var type = $('#_type');
+  var custom_url = $('#custom_url');
+  var divOther = $('.other_typ');
+  var divAuth = $('.auth');
+  var auth = $('#auth');
+  var divformList = $('.formList');
+  var form_url = $('#url')
+  var btnFormList = $('#btnFormList');
+  var submitButton = $('#submitButton')
+  type.on('change', ()=>{
+    console.log(type.val())
+    
+    if(type.val() == 'other_kobo'){
+      divOther.css('display', 'block');
+      custom_url.attr('required', true)
+      divformList.css('display', 'block');
+      form_url.attr('required', true)
+      divAuth.css('display', 'block');
+      auth.attr('required', true);
+      btnFormList.attr('disabled', false)
+      submitButton.attr('disabled', true)
 
-        $(".auth").css("display", "");
-      } else {
-        $("#label_url").text("API Url:");
-        $("#auth").attr("required", false);
-        $("#auth").val("api");
-        $(".auth").css("display", "none");
-      }
-    });
-  });
+    } else if ( type.val() == 'other'){
+      divOther.css('display', 'block');
+      custom_url.attr('required', true)
+      divformList.css('display', 'none');
+      form_url.attr('required', false);
+      divAuth.css('display', 'none');
+      auth.attr('required', false)
+      btnFormList.attr('disabled', true)
+      submitButton.attr('disabled', false)
+    }else{
+      divOther.css('display', 'none');
+      custom_url.attr('required', false)
+      divformList.css('display', 'block');
+      form_url.attr('required', true)
+      divAuth.css('display', 'block');
+      auth.attr('required', true)
+      btnFormList.attr('disabled', false)
+      submitButton.attr('disabled', true)
+
+    }
+
+  })
+
+
+  btnFormList.on('click', ()=>{
+    var formListData = {};
+    if(type.val() == 'other_kobo'){
+      formListData.url = custom_url.val() + '/data';
+      formListData.auth = auth.val();
+    }else{
+      formListData.url = type.val()+ '/data';
+      formListData.auth = auth.val();
+    }
+
+    $.ajax({
+      url:'formList',
+      method:'POST',
+      data:formListData,
+      headers: {
+          "Content-Type": "application/json",
+          'CSRF-Token': token
+        },
+        data:JSON.stringify(formListData)
+
+    })
+    .done(function(data){
+          console.log(data);
+          var selectEl = $('select[name="url"]');
+          var _html = '';
+            selectEl.children('option:not(:first)').remove();
+            data.forEach(function(el, i, x){              
+              _html +=`<option value="${el.url}">${el.title}</option>`                   
+            if(x.length - 1 == i){
+              console.log(_html)
+              selectEl.append(_html)
+            }
+            })
+          // for (var i = 0; i<data.length ; i++){
+            
+          // }
+          // html+=`</div>`
+          // $('#_formList').empty()
+          // $('#_formList').append(html)
+        })
+        .fail(function(error){
+          $('#_error').empty();
+
+          $('#_error').append(`<span class="bg-dannger"> System Error Please Try Again </span>`)
+        })
+  })
+
+  form_url.on('change', ()=>{
+    if(form_url.val()){
+   submitButton.attr('disabled', false)
+    } else {
+      alert('select form')
+      submitButton.attr('disabled', true)
+    }
+  })
+
+
 </script>

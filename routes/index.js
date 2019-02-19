@@ -31,4 +31,24 @@ router.post('/add', csrfProtection, async (req, res)=> {
 
 });
 
+router.post('/formlist',csrfProtection, async(req, res)=>{
+  var options = {
+    url: req.body.url,
+    headers:{
+      'Authorization':`Token ${req.body.auth}`
+    }
+  }
+  
+  try {
+    var x = await axios(options);
+    res.send(x.data)
+    console.log(x.data)
+
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(404)
+  }
+
+})
+
 module.exports = router;

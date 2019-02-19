@@ -32,7 +32,7 @@ function getDataForSchema(_userInputs) {
       data: JSON.stringify({
         url:_userInputs.url,
         auth:_userInputs.auth,
-        type:_userInputs.type
+        // type:_userInputs.type
       })
     })
       .done(function(data) {
@@ -251,7 +251,20 @@ function getTypeOfPromise(uniqueVar, data) {
     $("#koboForm").on("submit", function(e) {
       // //('Connection iniate buttion click')
       e.preventDefault();
-      var formData = $("#koboForm").serializeFormJSON();
+      // var formData = $("#koboForm").serializeFormJSON();
+      var formData = {}
+      if($('#_type').val() == 'other'){
+        formData.url = $('#custom_url').val();
+        formData.auth = '';
+
+      }else if($('#_type').val() == 'other_kobo'){
+        formData.url = $('#url').val();
+        formData.auth = $('#auth').val();
+      }else{
+        formData.url = $('#url').val();
+        formData.auth = $('#auth').val();
+      }
+      // formData.url = ($('#_type').val() =)
       //(formData)
       getDataForSchema(formData).then(function(a){console.log(a)}).catch(function(e){console.log(e)})
       tableau.connectionData = JSON.stringify(formData);
