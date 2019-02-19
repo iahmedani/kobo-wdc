@@ -14,7 +14,7 @@
 
       </div>
       <div class="form-group ">
-        <label for="type" id="label_url">Kobo Form Url:</label>
+        <label for="type" id="label_url">API Type:</label>
         <select name="type" id="_type" class="form-control"  required>
           <option value="https://kc.humanitarianresponse.info/api/v1">KoBoToolbox: Humanitarian</option>
           <option value="https://kf.kobotoolbox.org/">KoBoToolbox</option>
@@ -62,17 +62,28 @@
     <div class="col-md-10 col-sm-12">
       <div class="card ">
         <h5 class="card-header">
-          Note:
+          How To Use:
         </h5>
         <div class="card-body">
-          <h5 class="card-title">KoboToolBox</h5>
+          <h5 class="card-title">KoboToolBox / ONA.io</h5>
           <ul class="card-text">
-            <li><span class="font-weight-bold"> Kobo Form URL: </span><span>This can be obtained by [kobo_url]/api/v1/forms</span></li>
-            <li><span class="font-weight-bold"> Auth Token: </span><span>This can be obtained by [kobo_url]/[user_name]/api-token</span></li>
+            <li><span class="font-weight-bold"> Select KoboToolbox Instances from API Type: </span>
+              <ul>
+                <li>KoboToolBox Humanitarian <code>https://kobo.humanitarianresponse.info/</code> </li>
+                <li>KoboToolBox Researcher <code>https://kf.kobotoolbox.org/</code> </li>
+                <li>*KoboToolBox Custom Installation <code>https://kf.kobotoolbox.org/</code> </li>
+              </ul>
+            </li>
+            <li><span class="font-weight-bold"> Token Key: </span><span>This can be obtained by <code>[kobo_url]/[user_name]/api-token</code></span></li>
+            <li><span>Incase of KoboToolBox custom installation you have to provide server url like <code> http://your_url/api/v1</code></span></li>
+            <li><span>Click "Get Form List" to fech all your forms</span></li>
+            <li><span>select any form and click "GET DATA" to fetch data</span></li>
           </ul>
           <h5 class="card-title">Other REST API</h5>
           <ul class="card-text">
-            <li><span class="font-weight-bold"> API URL: </span><span>Works with all open API which do not require authentication</span></li>
+            <li><span class="font-weight-bold"> Select "Other REST API" from API Type: </span>
+            <li><span class="font-weight-bold">Add URL in API Url: </span><span>Works with all open API which do not require authentication</span></li>
+            <li><span class="font-weight-bold"> Click "GET DATA" to fech data </span></li>
           </ul>
         </div>
               <div class="card-footer text-muted">
