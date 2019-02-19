@@ -92,7 +92,7 @@
   var form_url = $('#url')
   var btnFormList = $('#btnFormList');
   var submitButton = $('#submitButton')
-  type.on('change', ()=>{
+  type.on('change', function(){
     console.log(type.val())
     
     if(type.val() == 'other_kobo'){
@@ -129,7 +129,7 @@
   })
 
 
-  btnFormList.on('click', ()=>{
+  btnFormList.on('click', function (){
     var formListData = {};
     if(type.val() == 'other_kobo'){
       formListData.url = custom_url.val() + '/data';
@@ -176,7 +176,7 @@
         })
   })
 
-  form_url.on('change', ()=>{
+  form_url.on('change', function(){
     if(form_url.val()){
    submitButton.attr('disabled', false)
     } else {
