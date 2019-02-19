@@ -156,7 +156,7 @@
           var _html = '';
             selectEl.children('option:not(:first)').remove();
             data.forEach(function(el, i, x){              
-              _html +=`<option value="${el.url}">${el.title}</option>`                   
+              _html +='<option value="'+el.url+'">'+el.title+'</option>'                   
             if(x.length - 1 == i){
               console.log(_html)
               selectEl.append(_html)
