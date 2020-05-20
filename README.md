@@ -25,15 +25,11 @@ npm start
 ### Access
 
 ```
-http://localhost:300
+http://localhost:3000
 ```
-
-## Testing server
-[Live Kobo WDC](http://167.179.85.104:3000)
 
 ## Heroku App
 [KOBO WDC](https://kwdc.herokuapp.com/)
-
 
 
 # Contributed from WFP Country Office Pakistan,
